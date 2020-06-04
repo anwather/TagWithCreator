@@ -16,12 +16,12 @@ $params = @{
 
 $output = New-AzResourceGroupDeployment -ResourceGroupName $resourceGroupName -TemplateFile .\azuredeploy.json -TemplateParameterObject $params -Verbose
 
-New-AzRoleAssignment -RoleDefinitionName "Reader" -ObjectId $output.Outputs.managedIdentityId.Value -ErrorAction SilentlyContinue
-New-AzRoleAssignment -RoleDefinitionName "Tag Contributor" -ObjectId $output.Outputs.managedIdentityId.Value -ErrorAction SilentlyContinue
+New-AzRoleAssignment -RoleDefinitionName "Reader" -ObjectId $output.Outputs.managedIdentityId.Value -ErrorAction SilentlyContinue -Verbose
+New-AzRoleAssignment -RoleDefinitionName "Tag Contributor" -ObjectId $output.Outputs.managedIdentityId.Value -ErrorAction SilentlyContinue -Verbose
 
 Push-Location
 Set-Location ..\functions
-Compress-Archive -Path * -DestinationPath ..\environment\functions.zip -Force
+Compress-Archive -Path * -DestinationPath ..\environment\functions.zip -Force -Verbose
 Pop-Location
 
 $file = (Get-ChildItem .\functions.zip).FullName

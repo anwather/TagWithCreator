@@ -96,6 +96,10 @@
                         {
                             "name": "FUNCTIONS_WORKER_RUNTIME",
                             "value": "powershell"
+                        },
+                        {
+                            "name": "PSWorkerInProcConcurrencyUpperBound",
+                            "value": 5
                         }
                     ]
 

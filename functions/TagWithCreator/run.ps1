@@ -1,6 +1,11 @@
 param($eventGridEvent, $TriggerMetadata)
 
 $caller = $eventGridEvent.data.claims.name
+if ($null -eq $caller) {
+    if ($eventGridEvent.data.authorization.evidence.principalType = "ServicePrincipal") {
+        $caller = $eventGridEvent.data.authorization.evidence.principalId
+    }
+}
 Write-Host "Caller: $caller"
 $resourceId = $eventGridEvent.data.resourceUri
 Write-Host "ResourceId: $resourceId"
