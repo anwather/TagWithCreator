@@ -26,6 +26,14 @@ Pop-Location
 
 $file = (Get-ChildItem .\functions.zip).FullName
 
-Publish-AzWebApp -ResourceGroupName $resourceGroupName -Name awfunctionsdev -ArchivePath $file -Verbose -Force
+Publish-AzWebApp -ResourceGroupName $resourceGroupName -Name $functionName -ArchivePath $file -Verbose -Force
 
 Remove-Item $file -Force
+
+## Create the Event Grid Subscription
+
+$params = @{
+    resourceId = (Get-AzResource -ResourceType Microsoft.Web/sites -ResourceGroupName $resourceGroupName).ResourceId
+}
+
+New-AzDeployment -Location $location -TemplateFile .\eventgrid.json -TemplateParameterObject $params -Verbose
