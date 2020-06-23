@@ -3,7 +3,8 @@ param($eventGridEvent, $TriggerMetadata)
 $caller = $eventGridEvent.data.claims.name
 if ($null -eq $caller) {
     if ($eventGridEvent.data.authorization.evidence.principalType = "ServicePrincipal") {
-        $caller = $eventGridEvent.data.authorization.evidence.principalId
+        Write-Host "Raw Caller Id: $($eventGridEvent.data.authorization.evidence.principalId)"
+        $caller = (Get-AzADServicePrincipal -ObjectId $eventGridEvent.data.authorization.evidence.principalId).DisplayName
     }
 }
 Write-Host "Caller: $caller"
