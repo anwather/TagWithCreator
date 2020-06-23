@@ -3,7 +3,11 @@ param($eventGridEvent, $TriggerMetadata)
 $caller = $eventGridEvent.data.claims.name
 if ($null -eq $caller) {
     if ($eventGridEvent.data.authorization.evidence.principalType = "ServicePrincipal") {
-        $caller = $eventGridEvent.data.authorization.evidence.principalId
+        $caller = (Get-AzADServicePrincipal -ObjectId $eventGridEvent.data.authorization.evidence.principalId).DisplayName
+        if ($null -eq $caller) {
+            Write-Host "MSI may not have permission to read the applications from the directory"
+            $caller = $eventGridEvent.data.authorization.evidence.principalId
+        }
     }
 }
 Write-Host "Caller: $caller"
