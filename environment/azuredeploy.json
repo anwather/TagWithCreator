@@ -66,8 +66,10 @@
                 "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]"
             ],
             "properties": {
+                "httpsOnly: true,
                 "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('appServicePlanName'))]",
                 "siteConfig": {
+                    "minTlsVersion": "1.2"
                     "appSettings": [
                         {
                             "name": "AzureWebJobsDashboard",
