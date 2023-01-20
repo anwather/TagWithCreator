@@ -38,9 +38,9 @@
                 "name": "Y1",
                 "tier": "Dynamic",
                 "size": "Y1"
-
             },
-            "kind": "functionapp"
+            "kind": "functionapp",
+            "properties": {}
         },
         {
             "apiVersion": "2014-04-01",
@@ -86,7 +86,7 @@
                         },
                         {
                             "name": "FUNCTIONS_EXTENSION_VERSION",
-                            "value": "~3"
+                            "value": "~4"
                         },
                         {
                             "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
@@ -98,7 +98,7 @@
                         },
                         {
                             "name": "PSWorkerInProcConcurrencyUpperBound",
-                            "value": 5
+                            "value": "5"
                         }
                     ],
                     "powerShellVersion": "~7"
