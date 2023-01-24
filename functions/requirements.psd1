@@ -2,6 +2,6 @@
 # See https://aka.ms/functionsmanageddependency for additional information.
 #
 @{
-    'Az.Accounts'  = '2.6.1'
-    'Az.Resources' = '4.4.0'
+    'Az.Accounts'  = '2.11.1'
+    'Az.Resources' = '6.5.1'
 }
