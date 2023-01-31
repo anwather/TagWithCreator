@@ -1,12 +1,5 @@
 param($eventGridEvent, $TriggerMetadata)
 
-Write-Host "=============================================================================="
-
-#Write-Host "eventGridEvent:"
-#$eventGridEvent | ConvertTo-Json
-#Write-Host "TriggerMetadata:"
-#$TriggerMetadata | ConvertTo-Json
-
 #$caller = $eventGridEvent.data.claims.name
 $caller = $eventGridEvent.data.claims."http://schemas.xmlsoap.org/ws/2005/05/identity/claims/upn"
 if ($null -eq $caller) {
@@ -29,10 +22,10 @@ if (($null -eq $caller) -or ($null -eq $resourceId)) {
 }
 
 $ignore = @(
-            "providers/Microsoft.Resources/deployments",
-            "providers/Microsoft.Resources/tags",
-            "providers/Microsoft.Network/frontdoor"
-        )
+    "providers/Microsoft.Resources/deployments",
+    "providers/Microsoft.Resources/tags",
+    "providers/Microsoft.Network/frontdoor"
+)
 
 foreach ($case in $ignore) {
     if ($resourceId -match $case) {
@@ -40,32 +33,36 @@ foreach ($case in $ignore) {
         exit;
     }
 }
-#Write-Host "Try add CreatedBy tag with user: $caller"
+#Write-Host "Try add Creator tag with user: $caller"
 
 $newTag = @{
-    CreatedBy = $caller
+    Creator = $caller
 }
 
 $tags = (Get-AzTag -ResourceId $resourceId)
 
-if ($tags){  # Tags supported?
-    if ($tags.properties){ # if null no tags?
-        if ($tags.properties.TagsProperty){
-            if (!($tags.properties.TagsProperty.ContainsKey('CreatedBy')) ) {
+if ($tags) {
+    # Tags supported?
+    if ($tags.properties) {
+        # if null no tags?
+        if ($tags.properties.TagsProperty) {
+            if (!($tags.properties.TagsProperty.ContainsKey('Creator')) ) {
                 Update-AzTag -ResourceId $resourceId -Operation Merge -Tag $newTag | Out-Null
-                Write-Host "Added CreatedBy tag with user: $caller"
+                Write-Host "Added Creator tag with user: $caller"
             }
             else {
-                Write-Host "CreatedBy tag already exists"
+                Write-Host "Creator tag already exists"
             }
-        }else{
-            Write-Host "Added CreatedBy tag with user: $caller"
+        }
+        else {
+            Write-Host "Added Creator tag with user: $caller"
             New-AzTag -ResourceId $resourceId -Tag $newTag | Out-Null
         }
-    }else{
+    }
+    else {
         Write-Host "WARNNG! Does $resourceId does not support tags? (`$tags.properties is null)"
     }
 }
-else{
+else {
     Write-Host "$resourceId does not support tags"
 }
