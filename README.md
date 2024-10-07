@@ -1,8 +1,10 @@
 # TagWithCreator
 
-Blog posted at [Premier Field Engineering Tech Community](https://aka.ms/AnthonyWatherston)
+Blog posted at [Core Infrastructure and Security](https://techcommunity.microsoft.com/t5/core-infrastructure-and-security/tagging-azure-resources-with-a-creator/ba-p/1479819)
 
-Any issues you can raise them in this repository.
+*Tested as deployable on 7/10/2024*
+
+Any issues you can raise them in this repository - **if you raise an issue on the blog I may not see it or be able to respond**.
 
 Disclaimer:
 

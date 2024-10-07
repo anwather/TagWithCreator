@@ -81,10 +81,6 @@
                             "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', parameters('storageAccountName'), ';AccountKey=', listKeys(resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName')),'2015-05-01-preview').key1)]"
                         },
                         {
-                            "name": "WEBSITE_CONTENTSHARE",
-                            "value": "[toLower(parameters('functionName'))]"
-                        },
-                        {
                             "name": "FUNCTIONS_EXTENSION_VERSION",
                             "value": "~4"
                         },
@@ -101,7 +97,7 @@
                             "value": "5"
                         }
                     ],
-                    "powerShellVersion": "~7"
+                    "powerShellVersion": "7.4"
 
                 }
             },
